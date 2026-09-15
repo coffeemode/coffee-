@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>حكاية صغيرة</title>
+
+  <!-- خط عربي -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 50% 30%, rgba(72, 65, 110, 0.20), transparent 35%),
+        linear-gradient(145deg, #080914, #101225 55%, #080914);
+
+      color: #f4efe7;
+      font-family: "Cairo", sans-serif;
+
+      min-height: 100vh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      overflow-x: hidden;
+    }
+
+    /* طبقة خفيفة جدًا تعطي عمق للخلفية */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.025) 1px, transparent 1px),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.02) 1px, transparent 1px);
+
+      background-size: 90px 90px, 120px 120px;
+
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 720px;
+
+      padding: 30px 22px;
+      margin: auto;
+    }
+
+    .page {
+      display: none;
+
+      width: 100%;
+
+      text-align: center;
+
+      animation: appear 0.6s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .small-title {
+      font-size: 13px;
+      font-weight: 400;
+
+      color: #b9b2a7;
+
+      letter-spacing: 1px;
+
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 500;
+
+      color: #f5eee4;
+
+      margin: 0 0 30px;
+    }
+
+    .opening {
+      font-size: 24px;
+      color: #d9c8a9;
+
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    .story {
+      font-size: 17px;
+      line-height: 2.2;
+
+      color: #dedbd6;
+
+      font-weight: 300;
+    }
+
+    .story p {
+      margin: 0 0 22px;
+    }
+
+    .highlight {
+      color: #d9c8a9;
+      font-weight: 500;
+    }
+
+    .divider {
+      width: 45px;
+      height: 1px;
+
+      background: #8f8068;
+
+      margin: 30px auto;
+      opacity: 0.6;
+    }
+
+    .button-area {
+      margin-top: 40px;
+    }
+
+    button {
+      border: 1px solid rgba(217, 200, 169, 0.45);
+
+      background: rgba(217, 200, 169, 0.06);
+
+      color: #eee6d9;
+
+      font-family: "Cairo", sans-serif;
+      font-size: 15px;
+
+      padding: 12px 34px;
+
+      border-radius: 30px;
+
+      cursor: pointer;
+
+      transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+    }
+
+    button:hover {
+      background: rgba(217, 200, 169, 0.14);
+
+      border-color: rgba(217, 200, 169, 0.8);
+
+      transform: translateY(-2px);
+    }
+
+    .choices {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 14px;
+
+      max-width: 380px;
+
+      margin: 35px auto 0;
+    }
+
+    .choice {
+      width: 100%;
+
+      padding: 16px 20px;
+
+      font-size: 16px;
+
+      background: rgba(255,255,255,0.025);
+
+      border: 1px solid rgba(255,255,255,0.13);
+
+      border-radius: 12px;
+    }
+
+    .choice:hover {
+      background: rgba(217, 200, 169, 0.09);
+
+      border-color: rgba(217, 200, 169, 0.5);
+    }
+
+    .ending {
+      display: none;
+
+      margin-top: 35px;
+
+      animation: appear 0.7s ease;
+    }
+
+    .ending.show {
+      display: block;
+    }
+
+    .ending-text {
+      font-size: 17px;
+      line-height: 2.1;
+
+      color: #dedbd6;
+    }
+
+    .back {
+      margin-top: 30px;
+
+      border: none;
+      background: transparent;
+
+      color: #9e998f;
+
+      font-size: 13px;
+      padding: 5px 10px;
+    }
+
+    .back:hover {
+      background: transparent;
+      border: none;
+      color: #d9c8a9;
+
+      transform: none;
+    }
+
+    /* للجوال */
+    @media (max-width: 600px) {
+
+      .container {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+
+      .opening {
+        font-size: 21px;
+      }
+
+      .story {
+        font-size: 15px;
+        line-height: 2.15;
+      }
+
+      button {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- ========================= -->
+    <!-- الصفحة الأولى -->
+    <!-- ========================= -->
+
+    <section class="page active" id="page1">
+
+      <div class="small-title">
+        حكاية صغيرة...
+      </div>
+
+      <div class="opening">
+        في يومٍ عادي جدًا...
+      </div>
+
+      <div class="story">
+
+        <p>
+          كانت تمضي في يومها كما تفعل دائمًا،
+          بين ساعات العمل، والمهام التي لا تنتهي،
+          والأشياء الصغيرة التي لا يلاحظها أحد.
+        </p>
+
+        <p>
+          لم يكن في هذا اليوم شيءٌ استثنائي...
+        </p>
+
+        <p>
+          إلى أن وصلها كوب قهوة.
+        </p>
+
+        <div class="divider"></div>
+
+        <p>
+          لا اسم واضح.<br>
+          لا رسالة طويلة.<br>
+          ولا حتى تفسير منطقي لسبب وصوله.
+        </p>
+
+        <p>
+          فقط قهوة...
+          وصلت إليها في منتصف يومها،
+          وكأن أحدهم قرر، لسببٍ ما،
+          أن يضيف مشهدًا صغيرًا إلى يومها.
+        </p>
+
+        <p>
+          ولَوهلة...
+          ربما تساءلت:
+        </p>
+
+        <p class="highlight">
+          "مين ممكن يسوي كذا؟"
+        </p>
+
+        <p>
+          لكن الإجابة لم تأتِ.
+        </p>
+
+        <p>
+          وبقي المرسل مجهولًا...
+        </p>
+
+        <p>
+          تمامًا كما تبدأ بعض الحكايات الجميلة؛
+          بشيءٍ بسيط لا نفهمه في البداية.
+        </p>
+
+      </div>
+
+      <div class="button-area">
+        <button onclick="nextPage(2)">
+          التالي
+        </button>
+      </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- الصفحة الثانية -->
+    <!-- ========================= -->
+
+    <section class="page" id="page2">
+
+      <div class="small-title">
+        حكاية صغيرة...
+      </div>
+
+      <h1>
+        لكن ربما...
+      </h1>
+
+      <div class="story">
+
+        <p>
+          ربما لم تكن القهوة هي الحكاية الحقيقية.
+        </p>
+
+        <p>
+          الحكاية الحقيقية كانت
+          <span class="highlight">أنتِ.</span>
+        </p>
+
+        <p>
+          في الأيام التي تتعبين فيها أكثر مما يظهر للناس،
+          وتنجزين أشياء كثيرة دون أن يسمع أحد صوت التعب.
+        </p>
+
+        <p>
+          في كل مرة تكملين يومك،
+          حتى وأنتِ تتمنين لو أن اليوم ينتهي.
+        </p>
+
+        <p>
+          وفي كل مرة تعطين أكثر مما يطلب منك،
+          ثم تمضين وكأن الأمر عادي.
+        </p>
+
+        <div class="divider"></div>
+
+        <p>
+          ربما لا يلاحظ الناس كل ذلك...
+        </p>
+
+        <p>
+          لكن هذا لا يعني أنه لا يستحق أن يُلاحظ.
+        </p>
+
+        <p>
+          ولهذا، في منتصف يومٍ عادي،
+          كان من الجميل أن يحدث شيءٌ غير عادي.
+        </p>
+
+        <p>
+          شيء بسيط...
+        </p>
+
+        <p>
+          لا يطلب منك شيئًا،
+          ولا ينتظر منك شيئًا.
+        </p>
+
+        <p>
+          فقط يقول لك، بطريقة مختلفة:
+        </p>
+
+        <p class="highlight">
+          "تعبك ما راح هدر."
+        </p>
+
+        <p>
+          وربما...
+        </p>
+
+        <p>
+          كانت هذه القهوة مجرد شيء بسيط
+          من شخصٍ أراد أن يجعل يومك ألطف قليلًا.
+        </p>
+
+      </div>
+
+      <div class="button-area">
+
+        <button onclick="nextPage(3)">
+          التالي
+        </button>
+
+        <br>
+
+        <button class="back" onclick="nextPage(1)">
+          رجوع
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- الصفحة الثالثة -->
+    <!-- ========================= -->
+
+    <section class="page" id="page3">
+
+      <div class="small-title">
+        وهنا...
+      </div>
+
+      <h1>
+        القرار بيدك.
+      </h1>
+
+      <div class="story">
+
+        <p>
+          وصلنا لنهاية الحكاية...
+        </p>
+
+        <p>
+          أو ربما ليست النهاية.
+        </p>
+
+        <p>
+          لأن بعض القصص لا يقرر نهايتها
+          شخص واحد.
+        </p>
+
+        <p>
+          فإذا كان هذا الشيء الصغير
+          قد جعلكِ تبتسمين...
+        </p>
+
+        <p>
+          فربما هناك شيء آخر
+          يستحق أن يُروى.
+        </p>
+
+        <div class="divider"></div>
+
+        <p class="highlight">
+          الآن أنتِ من تختارين.
+        </p>
+
+      </div>
+
+
+      <!-- الاختيارات -->
+
+      <div class="choices">
+
+        <button
+          class="choice"
+          onclick="choose('continue')">
+          ☕ أكمل الحكاية
+        </button>
+
+        <button
+          class="choice"
+          onclick="choose('end')">
+          🌙 أنهيها هنا
+        </button>
+
+      </div>
+
+
+      <!-- نتيجة الاختيار -->
+
+      <div class="ending" id="continueEnding">
+
+        <div class="divider"></div>
+
+        <div class="ending-text">
+
+          <p>
+            إذًا...
+          </p>
+
+          <p>
+            يبدو أن هناك مشهدًا آخر
+            لم يُكتب بعد.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="ending" id="endEnding">
+
+        <div class="divider"></div>
+
+        <div class="ending-text">
+
+          <p>
+            وهكذا انتهى المشهد...
+          </p>
+
+          <p>
+            لكن بعض الأشياء الجميلة
+            لا تحتاج إلى نهاية.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="button-area">
+
+        <button class="back" onclick="nextPage(2)">
+          رجوع
+        </button>
+
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <script>
+
+    /*
+      الانتقال بين الصفحات
+    */
+
+    function nextPage(pageNumber) {
+
+      // إخفاء جميع الصفحات
+      const pages = document.querySelectorAll(".page");
+
+      pages.forEach(function(page) {
+        page.classList.remove("active");
+      });
+
+      // إظهار الصفحة المطلوبة
+      const selectedPage =
+        document.getElementById("page" + pageNumber);
+
+      selectedPage.classList.add("active");
+
+      // الرجوع لأعلى الصفحة
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+
+    /*
+      اختيار الصفحة الأخيرة
+    */
+
+    function choose(choice) {
+
+      // إخفاء النتيجتين
+      document
+        .getElementById("continueEnding")
+        .classList.remove("show");
+
+      document
+        .getElementById("endEnding")
+        .classList.remove("show");
+
+
+      // إظهار النتيجة المناسبة
+      if (choice === "continue") {
+
+        document
+          .getElementById("continueEnding")
+          .classList.add("show");
+
+        console.log("الاختيار: أكمل الحكاية");
+
+      }
+
+
+      if (choice === "end") {
+
+        document
+          .getElementById("endEnding")
+          .classList.add("show");
+
+        console.log("الاختيار: أنهيها هنا");
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
