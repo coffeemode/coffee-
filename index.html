@@ -634,7 +634,16 @@
           .getElementById("continueEnding")
           .classList.add("show");
 
-        console.log("الاختيار: أكمل الحكاية");
+        fetch("https://formspree.io/f/myezgzrp", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  },
+  body: JSON.stringify({
+    choice: "أكمل الحكاية"
+  })
+});
 
       }
 
@@ -645,7 +654,16 @@
           .getElementById("endEnding")
           .classList.add("show");
 
-        console.log("الاختيار: أنهيها هنا");
+        fetch("https://formspree.io/f/myezgzrp", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  },
+  body: JSON.stringify({
+    choice: "أنهيها هنا"
+  })
+});
 
       }
 
